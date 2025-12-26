@@ -3,97 +3,110 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hogwarts Sorting Ceremony - Ultimate</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Fauna+One&display=swap" rel="stylesheet">
+    <title>Hogwarts Sorting Ceremony | Official Experience</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Playfair+Display:ital,wght@0,400;1,700&display=swap" rel="stylesheet">
     <style>
         :root {
             --gold: #c39d5e;
             --gold-bright: #f4cf8d;
             --bg-dark: #050505;
+            --glass: rgba(0, 0, 0, 0.85);
         }
 
         body {
             margin: 0; padding: 0;
-            background-color: var(--bg-dark);
+            background: var(--bg-dark);
             color: #e0e0e0;
-            font-family: 'Fauna One', serif;
+            font-family: 'Playfair Display', serif;
             display: flex; justify-content: center; align-items: center;
-            min-height: 100vh; overflow-x: hidden;
+            min-height: 100vh; overflow: hidden;
         }
 
-        /* Background Magis Animasi */
-        .stars {
+        /* Magical Background */
+        .magic-void {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at center, #111122 0%, #050505 100%);
+            background: radial-gradient(circle at center, #16162d 0%, #050505 100%);
             z-index: -1;
         }
 
+        .magic-void::after {
+            content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: url('https://www.transparenttextures.com/patterns/stardust.png');
+            opacity: 0.3;
+        }
+
         .container {
-            position: relative; width: 90%; max-width: 500px;
-            padding: 40px 20px; background: rgba(0, 0, 0, 0.7);
-            border: 1px solid var(--gold); border-radius: 2px;
-            text-align: center; backdrop-filter: blur(10px);
-            box-shadow: 0 0 40px rgba(0,0,0,1), inset 0 0 15px rgba(195, 157, 94, 0.2);
+            position: relative; width: 90%; max-width: 550px;
+            padding: 50px 30px; background: var(--glass);
+            border-top: 2px solid var(--gold);
+            border-bottom: 2px solid var(--gold);
+            text-align: center; backdrop-filter: blur(20px);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.8);
+            border-radius: 4px;
         }
 
         h1, h2 {
             font-family: 'Cinzel Decorative', serif;
-            color: var(--gold); letter-spacing: 2px;
+            color: var(--gold); letter-spacing: 3px;
+            text-transform: uppercase;
         }
 
         .hat-img {
-            width: 160px; margin-bottom: 20px;
-            filter: drop-shadow(0 0 15px var(--gold));
-            animation: float 4s ease-in-out infinite;
+            width: 140px; margin-bottom: 30px;
+            filter: drop-shadow(0 0 20px var(--gold-bright));
+            animation: float 5s ease-in-out infinite;
         }
 
         @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(-2deg); }
-            50% { transform: translateY(-15px) rotate(2deg); }
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-15px) scale(1.05); }
         }
 
-        /* Deskripsi & Teks */
-        .description {
-            font-size: 0.9rem; color: #bbb; line-height: 1.6;
-            margin-bottom: 25px; font-style: italic;
-        }
-
-        /* Tombol Premium */
-        .btn-magic {
+        .btn-eternal {
             background: none; border: 1px solid var(--gold);
-            color: var(--gold); padding: 12px 30px;
-            font-family: 'Cinzel Decorative', serif; font-size: 13px;
-            cursor: pointer; transition: 0.4s; text-transform: uppercase;
-            letter-spacing: 2px; overflow: hidden; position: relative;
+            color: var(--gold); padding: 15px 40px;
+            font-family: 'Cinzel Decorative', serif; font-size: 14px;
+            cursor: pointer; transition: 0.5s;
+            letter-spacing: 3px; margin-top: 30px;
         }
 
-        .btn-magic:hover {
-            background: var(--gold); color: black;
-            box-shadow: 0 0 20px var(--gold);
+        .btn-eternal:hover {
+            background: var(--gold); color: #000;
+            box-shadow: 0 0 30px var(--gold);
         }
 
-        /* Pilihan Kuis */
-        .option-card {
-            background: rgba(255, 255, 255, 0.05);
+        /* Quiz Layout */
+        .question-box { font-size: 1.3rem; margin-bottom: 30px; line-height: 1.4; color: #fff; }
+
+        .options-grid { display: grid; gap: 15px; }
+
+        .option-btn {
+            background: rgba(255,255,255,0.03);
             border: 1px solid rgba(195, 157, 94, 0.3);
-            padding: 15px; margin: 10px 0; cursor: pointer;
-            transition: 0.3s; font-size: 0.95rem; border-radius: 4px;
+            padding: 20px; border-radius: 0px;
+            color: #ccc; cursor: pointer; transition: 0.4s;
+            font-family: 'Playfair Display', serif; font-size: 1rem;
         }
 
-        .option-card:hover {
-            border-color: var(--gold-bright);
-            background: rgba(195, 157, 94, 0.15);
-            transform: scale(1.02);
+        .option-btn:hover {
+            background: rgba(195, 157, 94, 0.1);
+            border-color: var(--gold); color: #fff;
+            transform: translateX(10px);
         }
 
-        .result-img {
-            width: 140px; margin: 20px 0;
-            animation: appear 1.5s ease-out;
+        /* Result Styles */
+        .result-title { font-size: 0.9rem; letter-spacing: 6px; color: var(--gold); }
+        .house-title { font-size: 3.5rem; margin: 10px 0; text-shadow: 0 0 20px rgba(0,0,0,0.5); }
+        .house-crest { width: 180px; margin: 20px 0; animation: crestAppear 2s ease-out; }
+
+        @keyframes crestAppear {
+            0% { opacity: 0; transform: translateY(30px) rotateY(90deg); }
+            100% { opacity: 1; transform: translateY(0) rotateY(0deg); }
         }
 
-        @keyframes appear {
-            from { opacity: 0; transform: scale(0.7); filter: brightness(0); }
-            to { opacity: 1; transform: scale(1); filter: brightness(1); }
+        .house-description {
+            font-size: 1.1rem; line-height: 1.7; color: #bbb;
+            font-style: italic; padding: 0 20px;
         }
 
         .hidden { display: none; }
@@ -101,145 +114,106 @@
 </head>
 <body>
 
-    <div class="stars"></div>
+    <div class="magic-void"></div>
 
     <div class="container">
         <div id="screen-welcome">
             <img src="https://www.pngall.com/wp-content/uploads/11/Harry-Potter-Sorting-Hat-PNG-Image.png" class="hat-img">
             <h1>The Sorting Ceremony</h1>
-            <p class="description">
-                "Selamat datang di Aula Besar. Topi Seleksi akan membaca pikiran, bakat, dan hatimu untuk menentukan di mana tempatmu seharusnya berada."
-            </p>
-            <button class="btn-magic" onclick="showQuiz()">Mulai Seleksi</button>
+            <p style="font-style: italic; color: #888;">"There is nothing hidden in your head the Sorting Hat can't see..."</p>
+            <button class="btn-eternal" onclick="startQuiz()">Begin Ceremony</button>
         </div>
 
         <div id="screen-quiz" class="hidden">
-            <p id="progress" style="color: var(--gold); font-size: 11px; margin-bottom: 10px;"></p>
-            <h2 id="question-text" style="font-size: 1.2rem; min-height: 60px;"></h2>
-            <div id="options-list"></div>
+            <div id="progress-bar" style="color: var(--gold); font-size: 12px; margin-bottom: 20px; letter-spacing: 2px;"></div>
+            <div id="question-text" class="question-box"></div>
+            <div id="options-container" class="options-grid"></div>
         </div>
 
         <div id="screen-result" class="hidden">
-            <h2 style="font-size: 0.8rem; letter-spacing: 4px;">HASIL SELEKSI</h2>
-            <h1 id="house-name" style="font-size: 2.5rem; margin: 10px 0;"></h1>
-            <img id="house-img" src="" class="result-img">
-            <div id="house-desc" style="font-size: 0.9rem; color: #ccc; line-height: 1.5; padding: 0 15px;"></div>
-            <button class="btn-magic" style="margin-top: 30px;" onclick="location.reload()">Ulangi Upacara</button>
+            <div class="result-title">YOUR DESTINY IS</div>
+            <h1 id="final-house" class="house-title"></h1>
+            <img id="final-crest" src="" class="house-crest">
+            <p id="final-desc" class="house-description"></p>
+            <p style="margin-top: 40px; font-size: 10px; letter-spacing: 2px; color: var(--gold);">YOUR FATE IS SEALED. YOU CANNOT BE RE-SORTED.</p>
         </div>
     </div>
 
     <script>
         const questions = [
-            {
-                q: "Di sebuah jalan bercabang, mana yang paling menarik perhatianmu?",
-                options: [
-                    { t: "Jalan berbatu yang menantang", h: "Gryffindor" },
-                    { t: "Jalan setapak menuju perpustakaan tua", h: "Ravenclaw" },
-                    { t: "Jalan rahasia yang tersembunyi dan gelap", h: "Slytherin" },
-                    { t: "Jalan terang menuju pedesaan yang asri", h: "Hufflepuff" }
-                ]
-            },
-            {
-                q: "Apa yang paling ingin kamu kuasai dalam sihir?",
-                options: [
-                    { t: "Mantra pertahanan yang kuat", h: "Gryffindor" },
-                    { t: "Sihir pengubah realita dan pikiran", h: "Ravenclaw" },
-                    { t: "Ramuan untuk meraih kejayaan", h: "Slytherin" },
-                    { t: "Sihir penyembuhan dan alam", h: "Hufflepuff" }
-                ]
-            },
-            {
-                q: "Apa yang kamu harapkan orang katakan tentangmu setelah kamu tiada?",
-                options: [
-                    { t: "Dia adalah pemberani yang luar biasa", h: "Gryffindor" },
-                    { t: "Dia adalah orang terpintar yang pernah ada", h: "Ravenclaw" },
-                    { t: "Dia adalah sosok yang sangat berpengaruh", h: "Slytherin" },
-                    { t: "Dia adalah teman yang paling setia", h: "Hufflepuff" }
-                ]
-            },
-            {
-                q: "Seekor monster menghalangi jalanmu. Apa tindakanmu?",
-                options: [
-                    { t: "Menyerang dengan keberanian penuh", h: "Gryffindor" },
-                    { t: "Mencari kelemahannya melalui logika", h: "Ravenclaw" },
-                    { t: "Mencoba menjinakkannya demi keuntungan", h: "Slytherin" },
-                    { t: "Bekerja sama dengan teman untuk lewat", h: "Hufflepuff" }
-                ]
-            },
-            {
-                q: "Benda ajaib mana yang paling ingin kamu miliki?",
-                options: [
-                    { t: "Pedang Perak Kuno", h: "Gryffindor" },
-                    { t: "Cermin Pencitra Masa Depan", h: "Ravenclaw" },
-                    { t: "Tongkat Sihir Terkuat", h: "Slytherin" },
-                    { t: "Piala Persahabatan Abadi", h: "Hufflepuff" }
-                ]
-            }
+            { q: "In the dead of night, what do you hear whispering to you?", 
+              o: [{t: "A call to greatness and power", h: "Slytherin"}, {t: "A melody of ancient wisdom", h: "Ravenclaw"}, {t: "An invitation to adventure", h: "Gryffindor"}, {t: "The laughter of true friends", h: "Hufflepuff"}] },
+            { q: "Which magical artifact would you claim as your own?", 
+              o: [{t: "The Invisibility Cloak", h: "Gryffindor"}, {t: "The Elder Wand", h: "Slytherin"}, {t: "The Diadem of Knowledge", h: "Ravenclaw"}, {t: "The Cup of Healing", h: "Hufflepuff"}] },
+            { q: "If you could change history, what would be your goal?", 
+              o: [{t: "To right a great injustice", h: "Gryffindor"}, {t: "To preserve lost knowledge", h: "Ravenclaw"}, {t: "To lead a perfect empire", h: "Slytherin"}, {t: "To bring peace to all", h: "Hufflepuff"}] },
+            { q: "What is your greatest strength in a crisis?", 
+              o: [{t: "Calm logical analysis", h: "Ravenclaw"}, {t: "Unwavering nerve", h: "Gryffindor"}, {t: "Resourceful cunning", h: "Slytherin"}, {t: "Protecting the group", h: "Hufflepuff"}] },
+            { q: "How would you like to be remembered by the world?", 
+              o: [{t: "The Brave", h: "Gryffindor"}, {t: "The Wise", h: "Ravenclaw"}, {t: "The Loyal", h: "Hufflepuff"}, {t: "The Great", h: "Slytherin"}] }
         ];
+
+        const houseData = {
+            Gryffindor: { img: "https://vignette.wikia.nocookie.net/harrypotter/images/b/b1/Gryffindor_ClearBG.png", desc: "You belong in Gryffindor, where dwell the brave at heart. Their daring, nerve, and chivalry set Gryffindors apart.", color: "#740001" },
+            Slytherin: { img: "https://vignette.wikia.nocookie.net/harrypotter/images/0/00/Slytherin_ClearBG.png", desc: "Or perhaps in Slytherin, you'll make your real friends. Those cunning folk use any means to achieve their ends.", color: "#1a472a" },
+            Ravenclaw: { img: "https://vignette.wikia.nocookie.net/harrypotter/images/4/4e/Ravenclaw_ClearBG.png", desc: "Wit beyond measure is man's greatest treasure. You belong in Ravenclaw, where those of wit and learning will always find their kind.", color: "#0e1a40" },
+            Hufflepuff: { img: "https://vignette.wikia.nocookie.net/harrypotter/images/0/06/Hufflepuff_ClearBG.png", desc: "Where they are just and loyal, those patient Hufflepuffs are true and unafraid of toil.", color: "#ecb939" }
+        };
 
         let scores = { Gryffindor: 0, Hufflepuff: 0, Ravenclaw: 0, Slytherin: 0 };
         let currentIdx = 0;
 
-        function showQuiz() {
+        // CHECK IF ALREADY SORTED
+        window.onload = () => {
+            const savedHouse = localStorage.getItem('sortedHouse');
+            if (savedHouse) {
+                renderResult(savedHouse);
+            }
+        };
+
+        function startQuiz() {
             document.getElementById('screen-welcome').classList.add('hidden');
             document.getElementById('screen-quiz').classList.remove('hidden');
-            renderQuestion();
+            loadQuestion();
         }
 
-        function renderQuestion() {
+        function loadQuestion() {
             const q = questions[currentIdx];
-            document.getElementById('progress').innerText = `LANGKAH ${currentIdx + 1} DARI 5`;
+            document.getElementById('progress-bar').innerText = `STEP ${currentIdx + 1} OF 5`;
             document.getElementById('question-text').innerText = q.q;
-            const list = document.getElementById('options-list');
-            list.innerHTML = '';
+            const container = document.getElementById('options-container');
+            container.innerHTML = '';
 
-            q.options.forEach(opt => {
-                const card = document.createElement('div');
-                card.className = 'option-card';
-                card.innerText = opt.t;
-                card.onclick = () => {
+            q.o.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerText = opt.t;
+                btn.onclick = () => {
                     scores[opt.h]++;
                     currentIdx++;
-                    if(currentIdx < questions.length) renderQuestion(); else showResult();
+                    if (currentIdx < questions.length) loadQuestion();
+                    else finalizeSorting();
                 };
-                list.appendChild(card);
+                container.appendChild(btn);
             });
         }
 
-        function showResult() {
+        function finalizeSorting() {
+            const winner = Object.keys(scores).reduce((a, b) => scores[a] >= scores[b] ? a : b);
+            localStorage.setItem('sortedHouse', winner); // LOCK THE RESULT
+            renderResult(winner);
+        }
+
+        function renderResult(house) {
+            document.getElementById('screen-welcome').classList.add('hidden');
             document.getElementById('screen-quiz').classList.add('hidden');
             document.getElementById('screen-result').classList.remove('hidden');
 
-            const house = Object.keys(scores).reduce((a, b) => scores[a] >= scores[b] ? a : b);
-            
-            const database = {
-                Gryffindor: {
-                    name: "GRYFFINDOR",
-                    img: "https://vignette.wikia.nocookie.net/harrypotter/images/b/b1/Gryffindor_ClearBG.png",
-                    desc: "Kamu memiliki keberanian yang membara dan jiwa ksatria. Gryffindor adalah tempat bagi mereka yang berani membela kebenaran di atas segalanya."
-                },
-                Slytherin: {
-                    name: "SLYTHERIN",
-                    img: "https://vignette.wikia.nocookie.net/harrypotter/images/0/00/Slytherin_ClearBG.png",
-                    desc: "Cerdik, ambisius, dan memiliki jiwa kepemimpinan yang kuat. Slytherin adalah tempat bagi mereka yang menggunakan segala cara untuk mencapai kejayaan."
-                },
-                Ravenclaw: {
-                    name: "RAVENCLAW",
-                    img: "https://vignette.wikia.nocookie.net/harrypotter/images/4/4e/Ravenclaw_ClearBG.png",
-                    desc: "Kebijaksanaan, kecerdasan, dan kreativitas adalah kekuatanmu. Ravenclaw menghargai pikiran yang tajam dan keinginan untuk terus belajar."
-                },
-                Hufflepuff: {
-                    name: "HUFFLEPUFF",
-                    img: "https://vignette.wikia.nocookie.net/harrypotter/images/0/06/Hufflepuff_ClearBG.png",
-                    desc: "Kesetiaan, kerja keras, dan kejujuran adalah jati dirimu. Hufflepuff adalah tempat bagi mereka yang tulus dan menghargai persahabatan."
-                }
-            };
-
-            const result = database[house];
-            document.getElementById('house-name').innerText = result.name;
-            document.getElementById('house-name').style.color = (house === 'Gryffindor') ? '#9e2a2a' : (house === 'Slytherin') ? '#2d5a27' : (house === 'Ravenclaw') ? '#2a4d8e' : '#c39d5e';
-            document.getElementById('house-img').src = result.img;
-            document.getElementById('house-desc').innerText = result.desc;
+            const data = houseData[house];
+            document.getElementById('final-house').innerText = house;
+            document.getElementById('final-house').style.color = data.color;
+            document.getElementById('final-crest').src = data.img;
+            document.getElementById('final-desc').innerText = data.desc;
         }
     </script>
 </body>
