@@ -16,7 +16,7 @@ const questions = [
     ]
   },
   {
-    question: "Apa sifatmu yang paling dominan?",
+    question: "Apa sifatmu yang paling menonjol?",
     options: [
       { text: "Berani", house: "Gryffindor" },
       { text: "Setia", house: "Hufflepuff" },
@@ -60,6 +60,30 @@ startButton.addEventListener("click", () => {
 
 function showQuestion() {
   const q = questions[currentQuestion];
+  quizScreen.innerHTML = `<h2>${q.question}</h2>` +
+    q.options.map(opt => `<button onclick="selectOption('${opt.house}')">${opt.text}</button>`).join('');
+}
+
+window.selectOption = function(house) {
+  scores[house]++;
+  currentQuestion++;
+  if (currentQuestion < questions.length) {
+    showQuestion();
+  } else {
+    showResult();
+  }
+};
+
+function showResult() {
+  quizScreen.style.display = "none";
+  resultScreen.style.display = "block";
+  const sortedHouse = Object.keys(scores).reduce((a, b) => scores[a] >= scores[b] ? a : b);
+  
+  houseResult.textContent = `You belong to ${sortedHouse}!`;
+  houseResult.style.color = colors[sortedHouse];
+  houseIcon.src = icons[sortedHouse];
+  houseIcon.alt = sortedHouse;
+}
   // Gunakan backticks (`) untuk membungkus HTML string ini
   quizScreen.innerHTML = `<h2>${q.question}</h2>` +
     q.options.map(opt => `<button onclick="selectOption('${opt.house}')">${opt.text}</button>`).join('');
