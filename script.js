@@ -16,7 +16,7 @@ const questions = [
     ]
   },
   {
-    question: "Apa sifatmu yang paling dominan?",
+    question: "Apa sifatmu yang paling menonjol?",
     options: [
       { text: "Berani", house: "Gryffindor" },
       { text: "Setia", house: "Hufflepuff" },
@@ -43,10 +43,10 @@ const colors = {
 };
 
 const icons = {
-  "Gryffindor": "assets/houses/gryffindor.png",
-  "Hufflepuff": "assets/houses/hufflepuff.png",
-  "Ravenclaw": "assets/houses/ravenclaw.png",
-  "Slytherin": "assets/houses/slytherin.png"
+  "Gryffindor": "https://i.ibb.co/z5V0fK6/gryffindor.png",
+  "Hufflepuff": "https://i.ibb.co/7r0Q6cK/hufflepuff.png",
+  "Ravenclaw": "https://i.ibb.co/WKQ1sBc/ravenclaw.png",
+  "Slytherin": "https://i.ibb.co/jTgS5gN/slytherin.png"
 };
 
 let scores = { Gryffindor:0, Hufflepuff:0, Ravenclaw:0, Slytherin:0 };
@@ -60,6 +60,33 @@ startButton.addEventListener("click", () => {
 });
 
 // Show question
+function showQuestion() {
+  const q = questions[currentQuestion];
+  quizScreen.innerHTML = `<h2>${q.question}</h2>` +
+    q.options.map(opt => `<button onclick="selectOption('${opt.house}')">${opt.text}</button>`).join('');
+}
+
+// Handle selection
+function selectOption(house) {
+  scores[house]++;
+  currentQuestion++;
+  if(currentQuestion < questions.length){
+    showQuestion();
+  } else {
+    showResult();
+  }
+}
+
+// Show result
+function showResult() {
+  quizScreen.style.display = "none";
+  resultScreen.style.display = "block";
+  const sortedHouse = Object.keys(scores).reduce((a,b)=>scores[a]>=scores[b]?a:b);
+  houseResult.textContent = `You belong to ${sortedHouse}!`;
+  houseResult.style.color = colors[sortedHouse];
+  houseIcon.src = icons[sortedHouse];
+  houseIcon.alt = sortedHouse;
+}
 function showQuestion() {
   const q = questions[currentQuestion];
   quizScreen.innerHTML = `<h2>${q.question}</h2>` +
