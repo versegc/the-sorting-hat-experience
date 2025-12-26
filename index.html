@@ -3,19 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sorting Hat</title>
+    <title>The Sorting Hat Experience</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
+    <!-- Start Screen -->
+    <div class="start-screen">
         <h1>Welcome to Hogwarts</h1>
-        <img src="assets/hats/sorting_hat.png" alt="Sorting Hat" class="hat">
-        <button id="sortButton">Sort Me!</button>
-        <div id="houseResult" class="house-result"></div>
-        <div class="house-decor">
-            <img id="houseIcon" src="" alt="" class="house-icon">
-        </div>
+        <img src="assets/hats/sorting_hat.png" class="hat">
+        <button id="startButton">Start Sorting!</button>
     </div>
+
+    <!-- Quiz Screen -->
+    <div class="quiz-screen" style="display:none;"></div>
+
+    <!-- Result Screen -->
+    <div class="result-screen" style="display:none;">
+        <h1 id="houseResult"></h1>
+        <img id="houseIcon" class="house-icon" src="" alt="">
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
