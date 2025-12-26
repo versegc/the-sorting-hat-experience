@@ -3,227 +3,308 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Hogwarts Sorting Experience | Official Premium</title>
+    <title>Hogwarts Sorting Ceremony | Wizarding World Edition</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Playfair+Display:ital,wght@0,400;1,700&display=swap" rel="stylesheet">
     <style>
         :root {
             --gold: #c39d5e;
-            --gold-glow: rgba(195, 157, 94, 0.5);
-            --bg-dark: #020203;
+            --gold-light: #f4cf8d;
+            --dark-blue: #0b1120;
+            --dark-bg: #030305;
+            --text-light: #e0e0e0;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
-            background: var(--bg-dark);
-            color: #fff;
+            background: var(--dark-bg);
+            color: var(--text-light);
             font-family: 'Playfair Display', serif;
             display: flex; justify-content: center; align-items: center;
             min-height: 100vh; overflow: hidden;
+            position: relative; /* Untuk efek parallax */
         }
 
-        /* Latar Belakang Partikel Mewah */
-        .stars {
+        /* Latar Belakang Bintang Parallax */
+        .stars-bg {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at center, #111122 0%, #020203 100%);
-            z-index: -1;
-        }
-        .stars::after {
-            content: ""; position: absolute; width: 100%; height: 100%;
+            background: radial-gradient(circle at center, var(--dark-blue) 0%, var(--dark-bg) 100%);
             background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
-            opacity: 0.4;
+            z-index: -2;
+            animation: moveStars 120s linear infinite; /* Gerakan bintang halus */
+        }
+        @keyframes moveStars {
+            from { background-position: 0 0; }
+            to { background-position: 100% 100%; }
         }
 
-        .main-card {
-            position: relative; width: 90%; max-width: 420px;
+        /* Container Utama dengan Efek Bayangan Dalam */
+        .container-ww {
+            position: relative; width: 95%; max-width: 450px;
             padding: 50px 25px; text-align: center;
             background: rgba(0, 0, 0, 0.85);
-            border-top: 1px solid var(--gold);
-            border-bottom: 1px solid var(--gold);
-            backdrop-filter: blur(20px);
-            box-shadow: 0 0 60px rgba(0,0,0,1);
+            border: 1px solid rgba(195, 157, 94, 0.4);
+            backdrop-filter: blur(25px);
+            box-shadow: inset 0 0 50px rgba(0,0,0,0.8), 0 0 80px rgba(0,0,0,0.7);
+            transition: all 1s ease-in-out;
+            opacity: 0; /* Dimulai tersembunyi */
+            animation: fadeInContainer 1.5s forwards;
         }
 
-        .ornament {
-            position: absolute; width: 35px; height: 35px; border: 1px solid var(--gold);
+        @keyframes fadeInContainer {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        .top-l { top: 12px; left: 12px; border-right: 0; border-bottom: 0; }
-        .bot-r { bottom: 12px; right: 12px; border-left: 0; border-top: 0; }
+
+        /* Ornamen Sudut HP Style - Menggunakan Pseudo-elements */
+        .container-ww::before, .container-ww::after {
+            content: ""; position: absolute; width: 30px; height: 30px;
+            border: 2px solid var(--gold); opacity: 0.7;
+        }
+        .container-ww::before { top: 20px; left: 20px; border-right: 0; border-bottom: 0; }
+        .container-ww::after { bottom: 20px; right: 20px; border-left: 0; border-top: 0; }
 
         h1 {
             font-family: 'Cinzel Decorative', serif;
-            font-size: 1.5rem; color: var(--gold);
+            font-size: 1.8rem; color: var(--gold);
             letter-spacing: 3px; margin-bottom: 25px;
-            text-shadow: 0 0 15px var(--gold-glow);
+            text-shadow: 0 0 20px rgba(195, 157, 94, 0.7);
         }
 
-        /* PERBAIKAN GAMBAR TOPI */
-        .hat-container {
-            width: 100%; display: flex; justify-content: center; margin-bottom: 25px;
-        }
-        .hat-img {
-            width: 180px; height: auto;
-            filter: drop-shadow(0 0 20px var(--gold));
-            animation: floating 5s ease-in-out infinite;
+        /* Gambar Topi Animasi dengan Parallax Ringan */
+        .hat-hero {
+            width: 180px; height: auto; margin-bottom: 30px;
+            filter: drop-shadow(0 0 25px var(--gold-light));
+            animation: floatHat 6s ease-in-out infinite;
+            transition: transform 0.5s ease-out; /* Untuk efek parallax */
         }
 
-        @keyframes floating {
-            0%, 100% { transform: translateY(0) rotate(-2deg); }
-            50% { transform: translateY(-20px) rotate(2deg); }
+        @keyframes floatHat {
+            0%, 100% { transform: translateY(0) rotate(-3deg); }
+            50% { transform: translateY(-20px) rotate(3deg); }
         }
 
-        .magic-btn {
-            background: transparent; border: 1px solid var(--gold);
-            color: var(--gold); padding: 15px 35px;
-            font-family: 'Cinzel Decorative', serif; font-size: 13px;
-            cursor: pointer; transition: 0.5s; letter-spacing: 3px;
-            text-transform: uppercase;
+        /* Tombol Premium */
+        .btn-ww {
+            background: none; border: 1px solid var(--gold);
+            color: var(--gold); padding: 15px 40px;
+            font-family: 'Cinzel Decorative', serif; font-size: 14px;
+            letter-spacing: 2px; cursor: pointer; transition: 0.5s ease-in-out;
+            text-transform: uppercase; position: relative; overflow: hidden;
+            margin-top: 20px;
         }
-        .magic-btn:hover {
-            background: var(--gold); color: #000;
+
+        .btn-ww::before {
+            content: ""; position: absolute; top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: 0.6s;
+        }
+
+        .btn-ww:hover {
+            background: var(--gold); color: var(--dark-bg);
             box-shadow: 0 0 30px var(--gold);
+            transform: translateY(-3px);
+        }
+        .btn-ww:hover::before { left: 100%; }
+
+        /* Pertanyaan dan Opsi */
+        .question-txt { font-size: 1.2rem; margin-bottom: 30px; line-height: 1.6; font-style: italic; }
+
+        .options-grid { display: grid; gap: 15px; margin-top: 20px; }
+
+        .option-ww {
+            padding: 18px; background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(195, 157, 94, 0.3);
+            font-size: 1rem; cursor: pointer; transition: 0.4s ease-in-out;
+            position: relative; overflow: hidden;
+        }
+        .option-ww:hover {
+            border-color: var(--gold-light); background: rgba(195, 157, 94, 0.1);
+            transform: translateX(8px); color: var(--gold-light);
         }
 
-        .option-item {
-            padding: 18px; margin: 12px 0;
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(195,157,94,0.2);
-            cursor: pointer; transition: 0.4s; font-size: 1rem;
-            font-style: italic;
-        }
-        .option-item:hover {
-            border-color: var(--gold); background: rgba(195,157,94,0.1);
-            transform: translateX(10px);
-        }
-
+        /* Hasil Akhir */
+        .result-intro { font-size: 0.9rem; letter-spacing: 4px; color: var(--gold); }
         .house-name {
             font-family: 'Cinzel Decorative', serif;
-            font-size: 2.5rem; margin: 10px 0;
-            background: linear-gradient(to bottom, #fff, var(--gold));
+            font-size: 3rem; margin: 15px 0;
+            background: linear-gradient(to bottom, var(--text-light), var(--gold-light));
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 10px rgba(0,0,0,0.5);
         }
 
-        .crest-img {
-            width: 180px; height: auto; margin: 20px 0;
-            animation: crestReveal 2s ease-out;
+        .crest-ww {
+            width: 200px; height: auto; margin: 25px 0;
+            animation: crestReveal 2s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
 
         @keyframes crestReveal {
-            from { opacity: 0; transform: scale(0.6) rotateY(90deg); }
-            to { opacity: 1; transform: scale(1) rotateY(0deg); }
+            0% { opacity: 0; transform: scale(0.6) rotateX(90deg); filter: brightness(0); }
+            100% { opacity: 1; transform: scale(1) rotateX(0deg); filter: brightness(1); }
+        }
+
+        .house-desc {
+            font-size: 1.1rem; line-height: 1.7; color: #ccc; font-style: italic;
+            padding: 0 15px;
         }
 
         .hidden { display: none; }
+        .fade-out { animation: fadeOut 0.5s forwards; }
+        @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
+        .fade-in { animation: fadeIn 0.5s forwards; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body>
 
-    <div class="stars"></div>
+    <div class="stars-bg" id="stars-bg"></div>
 
-    <div class="main-card">
-        <div class="ornament top-l"></div>
-        <div class="ornament bot-r"></div>
-
+    <div class="container-ww" id="main-container">
         <div id="scr-welcome">
-            <div class="hat-container">
-                <img src="[attachment_0](attachment)" class="hat-img" alt="The Sorting Hat">
-            </div>
-            <h1>Upacara Seleksi</h1>
-            <p style="font-size: 1rem; color: #888; font-style: italic; margin-bottom: 30px; line-height: 1.6;">
-                "Aku tidak punya mata, tapi aku bisa melihat jauh ke dalam jiwamu..."
+            <img src="https://i.ibb.co/60V0G4G/sorting-hat-ww.png" class="hat-hero" alt="The Sorting Hat">
+            <h1>Upacara Seleksi Hogwarts</h1>
+            <p style="font-size: 1rem; color: #bbb; line-height: 1.6; margin-bottom: 30px;">
+                "Setiap penyihir memiliki tempat yang menunggu mereka di Hogwarts. Biarkan Topi Seleksi membaca jiwamu dan mengungkapkan takdirmu."
             </p>
-            <button class="magic-btn" onclick="startQuiz()">Masuk Ke Aula Besar</button>
+            <button class="btn-ww" onclick="startExperience()">Mulai Upacara</button>
         </div>
 
         <div id="scr-quiz" class="hidden">
-            <p id="progress" style="color: var(--gold); font-size: 11px; letter-spacing: 4px; margin-bottom: 15px;"></p>
-            <h2 id="q-text" style="font-size: 1.3rem; margin-bottom: 30px; line-height: 1.4;"></h2>
-            <div id="options-box"></div>
+            <p id="progress-text" style="color: var(--gold); font-size: 11px; letter-spacing: 3px; margin-bottom: 20px;"></p>
+            <h2 id="question-text" class="question-txt"></h2>
+            <div id="options-grid" class="options-grid"></div>
         </div>
 
         <div id="scr-result" class="hidden">
-            <p style="letter-spacing: 5px; color: var(--gold); font-size: 0.8rem;">TAKDIRMU ADALAH</p>
-            <h1 id="res-house" class="house-name"></h1>
-            <img id="res-crest" src="" class="crest-img">
-            <p id="res-desc" style="font-size: 1rem; line-height: 1.8; color: #ccc; font-style: italic;"></p>
-            <p style="margin-top: 40px; font-size: 9px; color: var(--gold); opacity: 0.6; letter-spacing: 2px;">
-                CATATAN PERMANEN | TIDAK DAPAT DIULANG
+            <p class="result-intro">TAKDIRMU TELAH DITETAPKAN</p>
+            <h1 id="house-final" class="house-name"></h1>
+            <img id="crest-final" src="" class="crest-ww">
+            <p id="desc-final" class="house-desc"></p>
+            <p style="margin-top: 50px; font-size: 9px; color: var(--gold); opacity: 0.7; letter-spacing: 2px;">
+                Catatan Permanen | Hasilmu Terkunci Selamanya
             </p>
         </div>
     </div>
 
     <script>
         const questions = [
-            { q: "Di tengah hutan yang gelap, cahaya mana yang akan kamu ikuti?", 
-              o: [{t: "Obor terang seorang petualang", h: "Gryffindor"}, {t: "Sinar bulan perak di atas danau", h: "Ravenclaw"}, {t: "Cahaya hijau misterius di balik pohon", h: "Slytherin"}, {t: "Lentera hangat dari pondok kecil", h: "Hufflepuff"}] },
-            { q: "Apa yang paling ingin kamu kuasai dalam dunia sihir?", 
-              o: [{t: "Mantra pertahanan yang berani", h: "Gryffindor"}, {t: "Ramuan untuk meraih kejayaan", h: "Slytherin"}, {t: "Sihir kuno yang penuh rahasia", h: "Ravenclaw"}, {t: "Sihir untuk membantu sesama", h: "Hufflepuff"}] },
-            { q: "Seorang musuh menghina sahabatmu. Apa tindakanmu?", 
-              o: [{t: "Menantang mereka berduel saat itu juga", h: "Gryffindor"}, {t: "Menyusun rencana balas dendam yang rapi", h: "Slytherin"}, {t: "Mendebat mereka dengan kecerdasanmu", h: "Ravenclaw"}, {t: "Tetap tenang dan mendukung sahabatmu", h: "Hufflepuff"}] },
-            { q: "Benda ajaib mana yang paling ingin kamu miliki?", 
-              o: [{t: "Pedang Kuno berlapis perak", h: "Gryffindor"}, {t: "Mahkota Ilmu Pengetahuan", h: "Ravenclaw"}, {t: "Tongkat Sihir paling kuat", h: "Slytherin"}, {t: "Piala Kesetiaan Abadi", h: "Hufflepuff"}] },
-            { q: "Bagaimana kamu ingin dikenang oleh dunia?", 
-              o: [{t: "Sebagai Sang Pemberani", h: "Gryffindor"}, {t: "Sebagai Sang Bijaksana", h: "Ravenclaw"}, {t: "Sebagai Sang Penakluk", h: "Slytherin"}, {t: "Sebagai Sang Sahabat Sejati", h: "Hufflepuff"}] }
+            { q: "Di Aula Besar yang ramai, di mana kamu duduk?", 
+              o: [{t: "Di depan, siap menyambut tantangan", h: "Gryffindor"}, {t: "Di sudut, mengamati dan merencanakan", h: "Slytherin"}, {t: "Dekat jendela, tenggelam dalam pikiran", h: "Ravenclaw"}, {t: "Di tengah, bersama teman-temanmu", h: "Hufflepuff"}] },
+            { q: "Buku sihir apa yang paling ingin kamu baca?", 
+              o: [{t: "Sejarah Pahlawan Sihir Hebat", h: "Gryffindor"}, {t: "Mantra Terlarang & Cara Menguasainya", h: "Slytherin"}, {t: "Ensiklopedi Sihir Kuno yang Terlupakan", h: "Ravenclaw"}, {t: "Buku Resep Ramuan Penyembuh", h: "Hufflepuff"}] },
+            { q: "Jika kamu bisa memilih satu Relik Kematian, mana yang kamu ambil?", 
+              o: [{t: "Jubah Gaib (untuk petualangan)", h: "Gryffindor"}, {t: "Batu Kebangkitan (untuk kebijaksanaan)", h: "Ravenclaw"}, {t: "Tongkat Elder (untuk kekuasaan)", h: "Slytherin"}, {t: "Tidak ada (terlalu berbahaya)", h: "Hufflepuff"}] },
+            { q: "Apa yang kamu lakukan saat menghadapi teka-teki sulit?", 
+              o: [{t: "Mencoba setiap solusi sampai berhasil", h: "Gryffindor"}, {t: "Menganalisis setiap detail secara cermat", h: "Ravenclaw"}, {t: "Mencari cara pintas atau bantuan tersembunyi", h: "Slytherin"}, {t: "Bekerja sama dengan orang lain untuk memecahkannya", h: "Hufflepuff"}] },
+            { q: "Hewan fantastis mana yang ingin kamu temui di Hutan Terlarang?", 
+              o: [{t: "Naga yang perkasa", h: "Gryffindor"}, {t: "Hippogriff yang anggun", h: "Ravenclaw"}, {t: "Thestral yang misterius", h: "Slytherin"}, {t: "Niffler yang lucu", h: "Hufflepuff"}] }
         ];
 
         const houseData = {
-            Gryffindor: { i: "https://i.ibb.co/z5VDfK6/gryffindor.png", d: "Tempat bagi mereka yang berani dan ksatria. Keberanianmu akan menuntunmu ke jalan pahlawan.", color: "#ae0001" },
-            Slytherin: { i: "https://i.ibb.co/JTg55gN/slytherin.png", d: "Cerdik dan ambisius. Kamu akan melakukan apa pun untuk mencapai puncak kejayaan.", color: "#2a623d" },
-            Ravenclaw: { i: "https://i.ibb.co/MKQ1sBc/ravenclaw.png", d: "Kebijaksanaan dan kecerdasan adalah senjatamu. Kamu menghargai ilmu di atas segalanya.", color: "#222f5b" },
-            Hufflepuff: { i: "https://i.ibb.co/7rQQ6cK/hufflepuff.png", d: "Setia, jujur, dan pekerja keras. Kamu adalah teman yang paling berharga bagi siapa pun.", color: "#ecb939" }
+            Gryffindor: { i: "https://i.ibb.co/z5VDfK6/gryffindor.png", d: "Kamu memiliki keberanian yang membara dan jiwa ksatria. Gryffindor adalah tempat bagi mereka yang berani membela kebenaran di atas segalanya.", color: "#ae0001" },
+            Slytherin: { i: "https://i.ibb.co/JTg55gN/slytherin.png", d: "Cerdik, ambisius, dan memiliki jiwa kepemimpinan yang kuat. Slytherin adalah tempat bagi mereka yang menggunakan segala cara untuk mencapai kejayaan.", color: "#2a623d" },
+            Ravenclaw: { i: "https://i.ibb.co/MKQ1sBc/ravenclaw.png", d: "Kebijaksanaan, kecerdasan, dan kreativitas adalah kekuatanmu. Ravenclaw menghargai pikiran yang tajam dan keinginan untuk terus belajar.", color: "#222f5b" },
+            Hufflepuff: { i: "https://i.ibb.co/7rQQ6cK/hufflepuff.png", d: "Kesetiaan, kerja keras, dan kejujuran adalah jati dirimu. Hufflepuff adalah tempat bagi mereka yang tulus dan menghargai persahabatan.", color: "#ecb939" }
         };
 
         let scores = { Gryffindor: 0, Hufflepuff: 0, Ravenclaw: 0, Slytherin: 0 };
-        let currentIdx = 0;
+        let currentQIndex = 0;
 
+        // Parallax Effect for Hat
+        document.addEventListener('mousemove', (e) => {
+            const hat = document.querySelector('.hat-hero');
+            if (hat) {
+                const x = (e.clientX / window.innerWidth - 0.5) * 20; // -10 to 10
+                const y = (e.clientY / window.innerHeight - 0.5) * 15; // -7.5 to 7.5
+                hat.style.transform = `translate(${x}px, ${y}px) rotate(-3deg)`;
+            }
+        });
+
+        // Check for saved house on load
         window.onload = () => {
-            const saved = localStorage.getItem('eternal_sorting_result');
-            if (saved) { renderResult(saved); }
+            const savedHouse = localStorage.getItem('wizarding_house_final');
+            if (savedHouse) {
+                renderResult(savedHouse);
+            } else {
+                // Ensure hat has initial transform if no mouse movement yet
+                const hat = document.querySelector('.hat-hero');
+                if (hat) hat.style.transform = `translateY(0) rotate(-3deg)`;
+            }
         };
 
-        function startQuiz() {
-            document.getElementById('scr-welcome').classList.add('hidden');
-            document.getElementById('scr-quiz').classList.remove('hidden');
-            loadQuestion();
+        function startExperience() {
+            const welcomeScreen = document.getElementById('scr-welcome');
+            welcomeScreen.classList.add('fade-out');
+            setTimeout(() => {
+                welcomeScreen.classList.add('hidden');
+                const quizScreen = document.getElementById('scr-quiz');
+                quizScreen.classList.remove('hidden');
+                quizScreen.classList.add('fade-in');
+                loadQuestion();
+            }, 500); // Wait for fade-out to complete
         }
 
         function loadQuestion() {
-            const q = questions[currentIdx];
-            document.getElementById('progress').innerText = `LANGKAH ${currentIdx + 1} DARI 5`;
-            document.getElementById('q-text').innerText = `"${q.q}"`;
-            const box = document.getElementById('options-box');
-            box.innerHTML = '';
+            const q = questions[currentQIndex];
+            document.getElementById('progress-text').innerText = `LANGKAH ${currentQIndex + 1} DARI ${questions.length}`;
+            document.getElementById('question-text').innerText = `"${q.q}"`;
+            const optionsGrid = document.getElementById('options-grid');
+            optionsGrid.innerHTML = ''; // Clear previous options
 
             q.o.forEach(opt => {
-                const div = document.createElement('div');
-                div.className = 'option-item';
-                div.innerText = opt.t;
-                div.onclick = () => {
+                const optionDiv = document.createElement('div');
+                optionDiv.className = 'option-ww';
+                optionDiv.innerText = opt.t;
+                optionDiv.onclick = () => {
                     scores[opt.h]++;
-                    currentIdx++;
-                    if(currentIdx < questions.length) loadQuestion(); else finalize();
+                    currentQIndex++;
+                    if (currentQIndex < questions.length) {
+                        loadQuestion();
+                    } else {
+                        finalizeSorting();
+                    }
                 };
-                box.appendChild(div);
+                optionsGrid.appendChild(optionDiv);
             });
         }
 
-        function finalize() {
-            const winner = Object.keys(scores).reduce((a, b) => scores[a] >= scores[b] ? a : b);
-            localStorage.setItem('eternal_sorting_result', winner);
-            renderResult(winner);
+        function finalizeSorting() {
+            const winnerHouse = Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b);
+            localStorage.setItem('wizarding_house_final', winnerHouse); // Save the result permanently
+            renderResult(winnerHouse);
         }
 
         function renderResult(house) {
-            document.getElementById('scr-welcome').classList.add('hidden');
-            document.getElementById('scr-quiz').classList.add('hidden');
-            const res = document.getElementById('scr-result');
-            res.classList.remove('hidden');
+            const currentScreen = document.querySelector('.container-ww > div:not(.hidden)');
+            if (currentScreen) {
+                currentScreen.classList.add('fade-out');
+                setTimeout(() => {
+                    currentScreen.classList.add('hidden');
+                    const resultScreen = document.getElementById('scr-result');
+                    resultScreen.classList.remove('hidden');
+                    resultScreen.classList.add('fade-in');
 
-            const data = houseData[house];
-            document.getElementById('res-house').innerText = house.toUpperCase();
-            document.getElementById('res-house').style.color = data.color;
-            document.getElementById('res-crest').src = data.i;
-            document.getElementById('res-desc').innerText = data.d;
+                    const data = houseData[house];
+                    document.getElementById('house-final').innerText = house.toUpperCase();
+                    document.getElementById('house-final').style.color = data.color; // Apply house specific color
+                    document.getElementById('crest-final').src = data.i;
+                    document.getElementById('desc-final').innerText = data.d;
+                }, 500);
+            } else {
+                // If directly loading result (from localStorage), just show it
+                document.getElementById('scr-welcome').classList.add('hidden');
+                document.getElementById('scr-quiz').classList.add('hidden');
+                const resultScreen = document.getElementById('scr-result');
+                resultScreen.classList.remove('hidden');
+                resultScreen.classList.add('fade-in');
+
+                const data = houseData[house];
+                document.getElementById('house-final').innerText = house.toUpperCase();
+                document.getElementById('house-final').style.color = data.color;
+                document.getElementById('crest-final').src = data.i;
+                document.getElementById('desc-final').innerText = data.d;
+            }
         }
     </script>
 </body>
