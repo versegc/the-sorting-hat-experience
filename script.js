@@ -16,12 +16,12 @@ const questions = [
     ]
   },
   {
-    question: "Apa sifatmu yang paling menonjol?",
+    question: "Apa sifatmu yang paling dominan?",
     options: [
       { text: "Berani", house: "Gryffindor" },
       { text: "Setia", house: "Hufflepuff" },
       { text: "Cerdas", house: "Ravenclaw" },
-      { text: "Ambisius", house: "Slytherin" }
+      { text: "Ambisious", house: "Slytherin" }
     ]
   },
   {
@@ -36,79 +36,51 @@ const questions = [
 ];
 
 const colors = {
-  "Gryffindor": "#D3A625",
-  "Hufflepuff": "#FFDB00",
-  "Ravenclaw": "#946B2D",
-  "Slytherin": "#AAAAAA"
+  "Gryffindor": "#740001",
+  "Hufflepuff": "#FFD800",
+  "Ravenclaw": "#0E1A40",
+  "Slytherin": "#1A472A"
 };
 
 const icons = {
-  "Gryffindor": "https://i.ibb.co/z5V0fK6/gryffindor.png",
-  "Hufflepuff": "https://i.ibb.co/7r0Q6cK/hufflepuff.png",
-  "Ravenclaw": "https://i.ibb.co/WKQ1sBc/ravenclaw.png",
-  "Slytherin": "https://i.ibb.co/jTgS5gN/slytherin.png"
+  "Gryffindor": "https://i.ibb.co/z5VDfK6/gryffindor.png",
+  "Hufflepuff": "https://i.ibb.co/7rQQ6cK/hufflepuff.png",
+  "Ravenclaw": "https://i.ibb.co/MKQ1sBc/ravenclaw.png",
+  "Slytherin": "https://i.ibb.co/JTg55gN/slytherin.png"
 };
 
-let scores = { Gryffindor:0, Hufflepuff:0, Ravenclaw:0, Slytherin:0 };
+let scores = { Gryffindor: 0, Hufflepuff: 0, Ravenclaw: 0, Slytherin: 0 };
 let currentQuestion = 0;
 
-// Start Quiz
 startButton.addEventListener("click", () => {
   startScreen.style.display = "none";
   quizScreen.style.display = "block";
   showQuestion();
 });
 
-// Show question
 function showQuestion() {
   const q = questions[currentQuestion];
   quizScreen.innerHTML = `<h2>${q.question}</h2>` +
     q.options.map(opt => `<button onclick="selectOption('${opt.house}')">${opt.text}</button>`).join('');
 }
 
-// Handle selection
-function selectOption(house) {
+window.selectOption = function(house) {
   scores[house]++;
   currentQuestion++;
-  if(currentQuestion < questions.length){
+  if (currentQuestion < questions.length) {
     showQuestion();
   } else {
     showResult();
   }
-}
+};
 
-// Show result
 function showResult() {
   quizScreen.style.display = "none";
   resultScreen.style.display = "block";
-  const sortedHouse = Object.keys(scores).reduce((a,b)=>scores[a]>=scores[b]?a:b);
-  houseResult.textContent = `You belong to ${sortedHouse}!`;
-  houseResult.style.color = colors[sortedHouse];
-  houseIcon.src = icons[sortedHouse];
-  houseIcon.alt = sortedHouse;
-}
-function showQuestion() {
-  const q = questions[currentQuestion];
-  quizScreen.innerHTML = `<h2>${q.question}</h2>` +
-    q.options.map(opt => `<button onclick="selectOption('${opt.house}')">${opt.text}</button>`).join('');
-}
-
-// Handle selection
-function selectOption(house) {
-  scores[house]++;
-  currentQuestion++;
-  if(currentQuestion < questions.length){
-    showQuestion();
-  } else {
-    showResult();
-  }
-}
-
-// Show result
-function showResult() {
-  quizScreen.style.display = "none";
-  resultScreen.style.display = "block";
-  const sortedHouse = Object.keys(scores).reduce((a,b)=>scores[a]>=scores[b]?a:b);
+  
+  const sortedHouse = Object.keys(scores).reduce((a, b) => scores[a] >= scores[b] ? a : b);
+  
+  // Gunakan backticks (`) untuk template literals
   houseResult.textContent = `You belong to ${sortedHouse}!`;
   houseResult.style.color = colors[sortedHouse];
   houseIcon.src = icons[sortedHouse];
