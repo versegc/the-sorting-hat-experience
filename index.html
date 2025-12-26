@@ -5,61 +5,193 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Sorting Hat Experience</title>
     <style>
-        /* CSS LANGSUNG DI SINI */
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #1a1a1a url('https://i.ibb.co/V3YN5Yd/hogwarts-bg.jpg') no-repeat center center fixed;
-            background-size: cover;
-            color: #fff;
-            text-align: center;
-            min-height: 100vh;
+        :root {
+            --gold: #D3A625;
+            --dark-red: #740001;
+            --bg-color: #0a0a0a;
         }
 
-        .start-screen, .quiz-screen, .result-screen {
-            padding: 50px;
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-color) url('https://i.ibb.co/V3YN5Yd/hogwarts-bg.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 40px;
+            border-radius: 20px;
+            border: 2px solid var(--gold);
+            box-shadow: 0 0 30px rgba(211, 166, 37, 0.3);
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            backdrop-filter: blur(10px);
         }
 
         .hat {
-            width: 250px;
-            margin-bottom: 20px;
-            animation: wiggle 2s infinite;
+            width: 200px;
+            filter: drop-shadow(0 0 10px var(--gold));
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0%, 100% { transform: translateY(0) rotate(-5deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        h1 {
+            font-family: 'Georgia', serif;
+            letter-spacing: 2px;
+            color: var(--gold);
         }
 
         button {
-            margin: 10px auto;
+            background: var(--gold);
+            color: #000;
+            border: none;
             padding: 15px 30px;
             font-size: 18px;
-            background: #D3A625;
-            color: white;
-            border: none;
-            border-radius: 12px;
+            font-weight: bold;
+            border-radius: 30px;
             cursor: pointer;
             transition: 0.3s;
+            margin: 10px auto;
             display: block;
+            width: 80%;
+            text-transform: uppercase;
         }
 
         button:hover {
-            background: #740001;
+            background: #fff;
             transform: scale(1.05);
+            box-shadow: 0 0 20px var(--gold);
+        }
+
+        .option-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border: 1px solid var(--gold);
+            font-size: 16px;
         }
 
         .house-icon {
             width: 150px;
-            margin-top: 20px;
-            animation: sparkle 2s infinite;
+            margin: 20px 0;
+            animation: glow 2s infinite alternate;
         }
 
-        @keyframes wiggle {
-            0%, 100% { transform: rotate(-10deg); }
-            50% { transform: rotate(10deg); }
-        }
-
-        @keyframes sparkle {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.1); opacity: 0.8; }
+        @keyframes glow {
+            from { filter: drop-shadow(0 0 5px #fff); }
+            to { filter: drop-shadow(0 0 20px var(--gold)); }
         }
     </style>
+</head>
+<body>
+
+    <div class="container">
+        <div id="start-screen">
+            <img src="https://cdn-icons-png.flaticon.com/512/1033/1033101.png" class="hat" alt="Sorting Hat">
+            <h1>The Sorting Hat</h1>
+            <p>Discover your true Hogwarts House</p>
+            <button onclick="startQuiz()">Begin the Ceremony</button>
+        </div>
+
+        <div id="quiz-screen" style="display:none;">
+            <h2 id="question-text" style="color: var(--gold);"></h2>
+            <div id="options-container"></div>
+        </div>
+
+        <div id="result-screen" style="display:none;">
+            <h1 id="house-name"></h1>
+            <img id="house-icon" class="house-icon" src="" alt="House Icon">
+            <p id="house-desc"></p>
+            <button onclick="location.reload()">Re-sort</button>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                q: "What quality do you value most?",
+                options: [
+                    { t: "Bravery", h: "Gryffindor" },
+                    { t: "Loyalty", h: "Hufflepuff" },
+                    { t: "Wisdom", h: "Ravenclaw" },
+                    { t: "Ambition", h: "Slytherin" }
+                ]
+            },
+            {
+                q: "Which path do you choose?",
+                options: [
+                    { t: "The sunny lane", h: "Hufflepuff" },
+                    { t: "The narrow alley", h: "Slytherin" },
+                    { t: "The forest path", h: "Gryffindor" },
+                    { t: "The library stairs", h: "Ravenclaw" }
+                ]
+            }
+        ];
+
+        let scores = { Gryffindor: 0, Hufflepuff: 0, Ravenclaw: 0, Slytherin: 0 };
+        let currentQ = 0;
+
+        function startQuiz() {
+            document.getElementById('start-screen').style.display = 'none';
+            document.getElementById('quiz-screen').style.display = 'block';
+            showQuestion();
+        }
+
+        function showQuestion() {
+            const q = questions[currentQ];
+            document.getElementById('question-text').innerText = q.q;
+            const container = document.getElementById('options-container');
+            container.innerHTML = '';
+            
+            q.options.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerText = opt.t;
+                btn.onclick = () => selectOption(opt.h);
+                container.appendChild(btn);
+            });
+        }
+
+        function selectOption(house) {
+            scores[house]++;
+            currentQ++;
+            if(currentQ < questions.length) {
+                showQuestion();
+            } else {
+                showResult();
+            }
+        }
+
+        function showResult() {
+            document.getElementById('quiz-screen').style.display = 'none';
+            document.getElementById('result-screen').style.display = 'block';
+            
+            const house = Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b);
+            const icons = {
+                Gryffindor: "https://i.ibb.co/z5VDfK6/gryffindor.png",
+                Hufflepuff: "https://i.ibb.co/7rQQ6cK/hufflepuff.png",
+                Ravenclaw: "https://i.ibb.co/MKQ1sBc/ravenclaw.png",
+                Slytherin: "https://i.ibb.co/JTg55gN/slytherin.png"
+            };
+
+            document.getElementById('house-name').innerText = house.toUpperCase() + "!";
+            document.getElementById('house-icon').src = icons[house];
+            document.getElementById('house-name').style.color = (house === 'Gryffindor') ? '#ff4d4d' : (house === 'Slytherin') ? '#2ecc71' : (house === 'Ravenclaw') ? '#3498db' : '#f1c40f';
+        }
+    </script>
+</body>
+</html>
 </head>
 <body>
 
