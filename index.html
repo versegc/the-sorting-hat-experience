@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>Sorting Hat Ceremony - Final Fix</title>
+<title>Sorting Hat Ceremony - Premium Edition</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
@@ -56,10 +56,11 @@ h1 {
     font-size: 1.8rem;
     letter-spacing: 2px;
     color: #d4af37;
+    text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
     margin: 10px 0;
 }
 
-/* GAMBAR TOPI REALISTIS */
+/* TOPY REALISTIS (Link Baru yang Stabil) */
 .hat-img {
     width: 200px; 
     height: auto;
@@ -89,6 +90,7 @@ h1 {
     font-size: 1.05rem;
     margin-bottom: 20px;
     color: #f0e6d2;
+    line-height: 1.4;
 }
 
 .options button {
@@ -100,6 +102,7 @@ h1 {
     border: 1px solid rgba(212, 175, 55, 0.2);
     background: rgba(255, 255, 255, 0.03);
     color: #eaeaff;
+    font-family: 'Poppins', sans-serif;
     font-size: 0.9rem;
     cursor: pointer;
     transition: all .3s ease;
@@ -107,20 +110,14 @@ h1 {
 
 .options button:hover {
     background: rgba(212, 175, 55, 0.15);
+    border-color: #d4af37;
 }
 
-/* HASIL LOGO ASRAMA */
 .house-logo {
     width: 150px; 
     height: auto;
     margin: 15px auto;
     display: block;
-    animation: zoomIn 0.8s ease;
-}
-
-@keyframes zoomIn {
-    from { transform: scale(0); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
 }
 
 .house-name {
@@ -132,22 +129,23 @@ h1 {
 
 .desc {
     font-size: 0.95rem;
+    line-height: 1.5;
     color: #d1c4a9;
+    margin: 10px auto 15px auto;
     max-width: 500px;
-    margin: 10px auto;
 }
 
 .attr {
     display: inline-block;
     padding: 8px 15px;
     background: rgba(0,0,0,0.4);
-    border-radius: 6px;
+    border-radius: 4px;
     font-size: 0.85rem;
     border: 1px solid rgba(212, 175, 55, 0.2);
 }
 
 .attr img {
-    width: 24px;
+    width: 22px;
     vertical-align: middle;
     margin-right: 10px;
 }
@@ -159,6 +157,7 @@ h1 {
     color: #d4af37;
     cursor: pointer;
     text-decoration: underline;
+    font-size: 0.9rem;
 }
 </style>
 </head>
@@ -168,33 +167,37 @@ h1 {
     <div class="stars"></div>
 </div>
 
-<div class="container">
+<div class="container" id="app">
     <h1>The Sorting Hat</h1>
 
-    <img src="https://www.pngarts.com/files/3/Harry-Potter-Sorting-Hat-PNG-Image-Background.png" alt="Sorting Hat" class="hat-img">
+    <img src="https://www.pngkit.com/png/full/22-225272_sorting-hat-png-harry-potter-sorting-hat-transparent.png" alt="Sorting Hat" class="hat-img">
 
     <div class="quiz-box" id="quiz"></div>
 </div>
 
 <script>
-// Reset kuis jika ingin coba lagi (Hapus localStorage jika perlu)
+if (localStorage.getItem("hogwarts_done")) {
+    document.getElementById("quiz").innerHTML =
+        "<p style='padding:40px 10px;'>Topi Seleksi telah menetapkan takdirmu.<br><b style='color:#d4af37;'>Selamat belajar di Hogwarts!</b></p>";
+} else {
+
 const questions = [
  {
-  q:"Apa kualitas yang paling mencerminkan dirimu?",
+  q:"Manakah kualitas yang paling kamu hargai dalam dirimu?",
   a:[
-    {t:"Keberanian dan Ksatria",h:"Gryffindor"},
-    {t:"Ambisi dan Kecerdikan",h:"Slytherin"},
-    {t:"Kecerdasan dan Wawasan",h:"Ravenclaw"},
-    {t:"Kesetiaan dan Kejujuran",h:"Hufflepuff"}
+    {t:"Keberanian dan jiwa ksatria",h:"Gryffindor"},
+    {t:"Kecerdikan dan ambisi besar",h:"Slytherin"},
+    {t:"Kecerdasan dan haus akan ilmu",h:"Ravenclaw"},
+    {t:"Kesetiaan dan kerja keras",h:"Hufflepuff"}
   ]
  },
  {
-  q:"Pilih artefak sihir favoritmu:",
+  q:"Apa yang akan kamu lakukan jika melihat teman dalam kesulitan?",
   a:[
-    {t:"Pedang Godric Gryffindor",h:"Gryffindor"},
-    {t:"Kalung Salazar Slytherin",h:"Slytherin"},
-    {t:"Mahkota Rowena Ravenclaw",h:"Ravenclaw"},
-    {t:"Piala Helga Hufflepuff",h:"Hufflepuff"}
+    {t:"Langsung menolong tanpa berpikir panjang",h:"Gryffindor"},
+    {t:"Mencari cara paling efisien untuk membantu mereka",h:"Slytherin"},
+    {t:"Menganalisis situasi untuk memberikan solusi terbaik",h:"Ravenclaw"},
+    {t:"Tetap mendampingi mereka apa pun yang terjadi",h:"Hufflepuff"}
   ]
  }
 ];
@@ -223,36 +226,29 @@ window.pick = function(h) {
 }
 
 function result() {
+ localStorage.setItem("hogwarts_done","yes");
  let house = Object.keys(score).reduce((a,b)=>score[a]>score[b]?a:b);
 
  const data = {
   Gryffindor:{
-    desc:"Tempat bagi mereka yang berani dan ksatria.",
+    desc:"Rumah bagi mereka yang berani, ksatria, dan tak gentar menghadapi bahaya.",
     attr:"Warna: Merah & Emas · Simbol: Singa",
     color:"#ae0001",
-    logo:"https://res.cloudinary.com/dt9vunv8v/image/upload/v1715424000/gryf_logo.png",
-    icon:"https://img.icons8.com/color/48/lion.png"
   },
   Slytherin:{
-    desc:"Tempat bagi mereka yang cerdik dan ambisius.",
+    desc:"Rumah bagi mereka yang cerdik, ambisius, dan pemimpin yang haus kekuasaan.",
     attr:"Warna: Hijau & Perak · Simbol: Ular",
     color:"#2a623d",
-    logo:"https://res.cloudinary.com/dt9vunv8v/image/upload/v1715424000/sly_logo.png",
-    icon:"https://img.icons8.com/color/48/snake.png"
   },
   Ravenclaw:{
-    desc:"Tempat bagi mereka yang cerdas dan kreatif.",
+    desc:"Rumah bagi mereka yang cerdas, kreatif, dan memiliki wawasan yang tajam.",
     attr:"Warna: Biru & Perunggu · Simbol: Elang",
     color:"#222f5b",
-    logo:"https://res.cloudinary.com/dt9vunv8v/image/upload/v1715424000/rav_logo.png",
-    icon:"https://img.icons8.com/color/48/eagle.png"
   },
   Hufflepuff:{
-    desc:"Tempat bagi mereka yang setia dan jujur.",
+    desc:"Rumah bagi mereka yang setia, jujur, sabar, dan tidak takut bekerja keras.",
     attr:"Warna: Kuning & Hitam · Simbol: Luwak",
     color:"#ecb939",
-    logo:"https://res.cloudinary.com/dt9vunv8v/image/upload/v1715424000/huff_logo.png",
-    icon:"https://img.icons8.com/color/48/badger.png"
   }
  };
 
@@ -260,18 +256,19 @@ function result() {
  quiz.innerHTML = `
  <div class="result">
    <div class="house-name" style="color:${data[house].color};">${house}</div>
-   <img src="${data[house].logo}" class="house-logo" onerror="this.src='https://www.pngall.com/wp-content/uploads/13/Gryffindor-Logo-PNG-File.png'">
+   <img src="${data[house].logo}" class="house-logo" alt="${house}">
    <div class="desc">${data[house].desc}</div>
    <div class="attr" style="border-color:${data[house].color}66">
      <img src="${data[house].icon}">
      ${data[house].attr}
    </div>
    <br>
-   <button onclick="location.reload()" class="btn-selesai">Coba Lagi</button>
+   <button onclick="location.reload()" class="btn-selesai">Selesai</button>
  </div>`;
 }
 
 showQ();
+}
 </script>
 </body>
 </html>
