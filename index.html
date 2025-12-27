@@ -1,61 +1,50 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>The Sorting Hat — Upacara</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Sorting Hat Ceremony</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <canvas id="bg-canvas" aria-hidden="true"></canvas>
-  <div class="overlay" aria-hidden="true"></div>
-  <canvas id="confetti" aria-hidden="true"></canvas>
 
-  <main class="stage">
-    <section class="card" role="main" aria-labelledby="title">
-      <header>
-        <img class="hat" alt="Sorting Hat art" id="hat-art" src="">
-        <h1 id="title">The Sorting Hat Experience</h1>
-        <p class="lead">TEMUKAN RUMAH YANG PALING COCOK UNTUKMU</p>
-      </header>
+    <canvas id="star-canvas"></canvas>
 
-      <div id="start-area" class="">
-        <button id="start-btn" class="btn" aria-label="Mulai upacara">Mulai Upacara</button>
-        <div id="already" style="display:none">
-          <div class="done-badge" id="done-badge"></div>
-          <div class="note">Upacara sudah dilakukan. Hasil disimpan secara permanen di browser ini.</div>
-        </div>
-      </div>
-
-      <div id="quiz-area" class="quiz" style="margin-top:18px;display:none">
-        <div class="corners" aria-hidden="true">
-          <div class="corner-dot tl"></div>
-          <div class="corner-dot tr"></div>
-          <div class="corner-dot bl"></div>
-          <div class="corner-dot br"></div>
+    <div class="container">
+        <div id="start-screen" class="fade-in">
+            <img src="https://www.pngall.com/wp-content/uploads/11/Magic-Hat-PNG-Image.png" class="sorting-hat-img" alt="Sorting Hat">
+            <h1 class="glow-text">The Sorting Hat</h1>
+            <p class="subtitle">BIARKAN TAKDIR MEMILIH JALANMU</p>
+            <button class="btn-magic" onclick="startQuiz()">MULAI UPACARA</button>
         </div>
 
-        <div class="question" id="question-text">Pertanyaan ...</div>
-        <div class="options" id="options"></div>
-      </div>
-
-      <div id="result" aria-live="polite" style="display:none">
-        <img id="house-art" class="house-art" src="" alt="House art">
-        <div id="house-name" class="house-name">HOUSE</div>
-
-        <div class="house-desc-wrap">
-          <div class="desc-image" id="desc-img" aria-hidden="true"></div>
-          <div class="desc-text" id="desc-text"></div>
+        <div id="quiz-screen" class="quiz-box hidden">
+            <div class="corner top-left"></div>
+            <div class="corner top-right"></div>
+            <div class="corner bottom-left"></div>
+            <div class="corner bottom-right"></div>
+            <h2 id="question-text">Membaca Pikiran...</h2>
+            <div id="options-container"></div>
         </div>
 
-        <div class="attrs" id="attrs"></div>
+        <div id="result-screen" class="hidden">
+            <div class="result-header">
+                <img id="house-img" src="" class="house-logo">
+                <h1 id="house-name">HOUSE</h1>
+            </div>
+            
+            <div id="attr-list" class="attr-container"></div>
+            
+            <p id="house-desc" class="desc-text"></p>
+            
+            <div class="footer-note">
+                <p>KEPUTUSAN INI MUTLAK. SELAMAT DATANG DI RUMAH BARUMU.</p>
+            </div>
+        </div>
+    </div>
 
-        <div class="note" style="margin-top:18px">KEPUTUSAN INI MUTLAK. SELAMAT DATANG DI RUMAH BARUMU.</div>
-      </div>
-    </section>
-  </main>
-
-  <script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
