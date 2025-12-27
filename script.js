@@ -1,16 +1,15 @@
 const questions = [
-    { q: "Malam hari di Hogwarts, kau melihat temanmu dalam bahaya. Apa yang kau lakukan?", a: [{t:"Menerjang langsung untuk menolong", h:"G"}, {t:"Mencari guru atau bantuan", h:"H"}, {t:"Menyusun strategi penyelamatan", h:"R"}, {t:"Memastikan diriku aman dulu", h:"S"}] },
-    { q: "Kualitas apa yang paling kau hargai?", a: [{t:"Keberanian & Tekad", h:"G"}, {t:"Kesetiaan & Kerja Keras", h:"H"}, {t:"Kecerdasan & Kebijaksanaan", h:"R"}, {t:"Ambisi & Kecerdikan", h:"S"}] },
-    { q: "Pilih hewan peliharaan ajaibmu:", a: [{t:"Burung Hantu (Bijak)", h:"R"}, {t:"Kucing (Lincah)", h:"G"}, {t:"Tikus (Cerdik)", h:"S"}, {t:"Kodok (Setia)", h:"H"}] },
-    { q: "Apa yang paling ingin kau pelajari?", a: [{t:"Mantra Pertahanan Diri", h:"G"}, {t:"Ilmu Ramuan Rahasia", h:"S"}, {t:"Sejarah Sihir Kuno", h:"R"}, {t:"Pemeliharaan Satwa Gaib", h:"H"}] },
-    { q: "Cermin Tarsah memperlihatkan keinginan terdalammu. Apa itu?", a: [{t:"Menjadi pahlawan hebat", h:"G"}, {t:"Dikelilingi sahabat setia", h:"H"}, {t:"Mengetahui segala rahasia dunia", h:"R"}, {t:"Memegang kekuasaan besar", h:"S"}] }
+    { q: "Apa yang paling kau banggakan?", a: [{t:"Keberanian", h:"G"}, {t:"Ambisi", h:"S"}, {t:"Kecerdasan", h:"R"}, {t:"Kesetiaan", h:"H"}] },
+    { q: "Jika melihat ketidakadilan, kau akan...", a: [{t:"Menerjang langsung", h:"G"}, {t:"Mencari rencana cerdik", h:"S"}, {t:"Menganalisis situasinya", h:"R"}, {t:"Membantu yang lemah", h:"H"}] },
+    { q: "Pilih artefak sihirmu:", a: [{t:"Pedang Kuno", h:"G"}, {t:"Cincin Perak", h:"S"}, {t:"Buku Rahasia", h:"R"}, {t:"Piala Emas", h:"H"}] },
+    { q: "Apa yang kau inginkan dari orang lain?", a: [{t:"Rasa Hormat", h:"S"}, {t:"Kepercayaan", h:"H"}, {t:"Kekaguman", h:"R"}, {t:"Kebergantungan", h:"G"}] }
 ];
 
 const houses = {
-    G: { name: "Gryffindor", color: "#ae0001", img: "https://www.pngall.com/wp-content/uploads/11/Gryffindor-Logo-PNG-Image.png", desc: "Tempat bagi mereka yang berani, ksatria, dan memiliki tekad membara. Gryffindor menyambut jiwa pemberanimu!", attrs: [{n:"Berani", i:"shield"}, {n:"Ksatria", i:"swords"}, {n:"Tekad", i:"flame"}] },
-    S: { name: "Slytherin", color: "#2a623d", img: "https://www.pngall.com/wp-content/uploads/11/Slytherin-Logo-PNG-Image.png", desc: "Rumah bagi para pemimpin besar yang ambisius, cerdik, dan selalu memiliki cara untuk mencapai puncak.", attrs: [{n:"Ambisi", i:"crown"}, {n:"Cerdik", i:"zap"}, {n:"Bangga", i:"gem"}] },
-    R: { name: "Ravenclaw", color: "#222f5b", img: "https://www.pngall.com/wp-content/uploads/11/Ravenclaw-Logo-PNG-Image.png", desc: "Pikiran yang tajam dan kreativitas tak terbatas. Di Ravenclaw, pengetahuan adalah kekuatan terbesarmu.", attrs: [{n:"Bijak", i:"book-open"}, {n:"Cerdas", i:"brain"}, {n:"Kreatif", i:"palette"}] },
-    H: { name: "Hufflepuff", color: "#ecb939", img: "https://www.pngall.com/wp-content/uploads/11/Hufflepuff-Logo-PNG-Image.png", desc: "Kesetiaan, kejujuran, dan kerja keras adalah fondasimu. Hufflepuff adalah keluarga yang akan selalu ada untukmu.", attrs: [{n:"Setia", i:"heart"}, {n:"Sabar", i:"hourglass"}, {n:"Jujur", i:"check-circle"}] }
+    G: { name: "Gryffindor", color: "#ae0001", img: "https://www.pngall.com/wp-content/uploads/11/Gryffindor-Logo-PNG-Image.png", desc: "Tempat bagi mereka yang berani dan ksatria.", attrs: [{n:"Berani", i:"shield"}, {n:"Ksatria", i:"swords"}] },
+    S: { name: "Slytherin", color: "#2a623d", img: "https://www.pngall.com/wp-content/uploads/11/Slytherin-Logo-PNG-Image.png", desc: "Bagi mereka yang ambisius dan cerdik.", attrs: [{n:"Ambisi", i:"crown"}, {n:"Cerdik", i:"zap"}] },
+    R: { name: "Ravenclaw", color: "#222f5b", img: "https://www.pngall.com/wp-content/uploads/11/Ravenclaw-Logo-PNG-Image.png", desc: "Penyihir bijak dengan kecerdasan tinggi.", attrs: [{n:"Bijak", i:"book-open"}, {n:"Cerdas", i:"brain"}] },
+    H: { name: "Hufflepuff", color: "#ecb939", img: "https://www.pngall.com/wp-content/uploads/11/Hufflepuff-Logo-PNG-Image.png", desc: "Rumah bagi yang setia dan jujur.", attrs: [{n:"Setia", i:"heart"}, {n:"Jujur", i:"check-circle"}] }
 };
 
 let current = 0;
@@ -31,7 +30,7 @@ function showQ() {
         const b = document.createElement('button');
         b.className = 'btn-option';
         b.innerText = a.t;
-        b.onclick = () => { scores[a.h]++; current++; if(current < 5) showQ(); else showResult(); };
+        b.onclick = () => { scores[a.h]++; current++; if(current < questions.length) showQ(); else showResult(); };
         opt.appendChild(b);
     });
 }
@@ -60,7 +59,7 @@ function showResult() {
     document.getElementById('result-screen').classList.add('fade-in');
 }
 
-// Bintang Parallaks
+// Background Bintang (Fixed & Estetik)
 const canvas = document.getElementById('star-canvas');
 const ctx = canvas.getContext('2d');
 let stars = [];
@@ -69,15 +68,15 @@ function initStars() {
     canvas.width = window.innerWidth; canvas.height = window.innerHeight;
     stars = [];
     for(let i=0; i<200; i++) {
-        stars.push({ x: Math.random()*canvas.width, y: Math.random()*canvas.height, s: Math.random()*1.5, d: Math.random()*0.4+0.1, a: Math.random() });
+        stars.push({ x: Math.random()*canvas.width, y: Math.random()*canvas.height, size: Math.random()*1.5, speed: Math.random()*0.4+0.1, alpha: Math.random() });
     }
 }
 function drawStars() {
-    ctx.clearRect(0,0,canvas.width,canvas.height);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     stars.forEach(s => {
-        ctx.fillStyle = `rgba(255,255,255,${s.a})`;
-        ctx.beginPath(); ctx.arc(s.x, s.y, s.s, 0, Math.PI*2); ctx.fill();
-        s.y += s.speed || s.d; if(s.y > canvas.height) s.y = 0;
+        ctx.fillStyle = `rgba(255, 255, 255, ${s.alpha})`;
+        ctx.beginPath(); ctx.arc(s.x, s.y, s.size, 0, Math.PI*2); ctx.fill();
+        s.y += s.speed; if(s.y > canvas.height) s.y = 0;
     });
     requestAnimationFrame(drawStars);
 }
